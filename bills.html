@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Bills{% endblock %}
+{% block body %}
+<h3>Bills</h3>
+<div class="mb-3">
+    <a class="btn btn-success" href="{{ url_for('add_bill') }}">Add Bill</a>
+    <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back</a>
+</div>
+
+{% if bills %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bill #</th>
+            <th>Patient</th>
+            <th>Amount</th>
+            <th>Issued</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for b in bills %}
+        <tr>
+            <td>{{ b.bill_number }}</td>
+            <td>{{ b.patient_name }}<br><small>{{ b.patient_email }}</small></td>
+            <td>{{ "%.2f"|format(b.amount) }}</td>
+            <td>{{ b.issued_date.strftime("%Y-%m-%d %H:%M") }}</td>
+            <td>{{ b.description }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No bills yet.</p>
+{% endif %}
+{% endblock %}
